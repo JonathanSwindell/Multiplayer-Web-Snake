@@ -217,7 +217,7 @@ if(snake2.invincible){
           winner = "red";
           winScreen = true;
         }
-        for (var j = index + 1; j < snake2.cells.length; j++) {
+        for (var j = 0; j < snake2.cells.length; j++) {
           if (cell.x === snake2.cells[j].x && cell.y === snake2.cells[j].y) {
             winner = "red";
             winScreen = true;
@@ -256,7 +256,7 @@ if(snake2.invincible){
             winner = "blue"
             winScreen = true;
           }
-          for (var j = index + 1; j < snake.cells.length; j++) {
+          for (var j = 0; j < snake.cells.length; j++) {
             if (cell.x === snake.cells[j].x && cell.y === snake.cells[j].y) {
               winner = "blue"
               winScreen = true;
