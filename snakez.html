@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Snakes</title>
+  <title>Snakez</title>
   <style>
   html, body {
     height: 100%;
@@ -22,10 +22,19 @@
 
 <canvas width="400" height="400" id="game"></canvas>
 <script>
+
+/*
+snake eqaul blue snake
+snake2 equal red snake
+*/
+
+//setup variables
 var winScreen = false;
 var winner;
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
+//set font
+context.font = "30px Arial";
 var grid = 16;
 var snake = {
   x: 64,
@@ -36,7 +45,7 @@ var snake = {
   maxCells: 4,
   timer: 22,
   invincible: false,
-  invincibleEnergy: 0
+  invincibleFatigue: 0
 
 };
 var snake2 = {
@@ -48,12 +57,13 @@ var snake2 = {
   maxCells: 4,
   timer: 22,
   invincible: false,
-  invincibleEnergy: 0
+  invincibleFatigue: 0
 
 };
 
 var count = 0;
 var apples = [
+  //puts the four apple in the four conners
 apple1 = {
   x: 32,
   y: 32
@@ -77,8 +87,10 @@ function getRandomInt(min, max) {
 }
 
 function restartGame(){
+  //sets winScreen equal to false so that the game loop can start again.
   winScreen = false;
 
+  //resets snake variables
   snake = {
     x: 0,
     y: 0,
@@ -88,6 +100,7 @@ function restartGame(){
     maxCells: 4,
     timer: 22
   };
+  //resets snake2 variables
   snake2 = {
     x: 160,
     y: 272,
@@ -100,6 +113,7 @@ function restartGame(){
 
   count = 0;
 
+  //resets apples variables
   apples = [
   apple1 = {
   x: 32,
@@ -119,10 +133,12 @@ function restartGame(){
   }
   ];
 
+  //starts game loop
   loop();
 }
 
 function loop() {
+  //this part of loop occurs only if the winScreen is equal to false
   if(!winScreen){
   requestAnimationFrame(loop);
   // slow game loop to 15 fps instead of 60 - 60/15 = 4
@@ -130,9 +146,14 @@ function loop() {
     return;
   }
   count = 0;
+
+  //clears the canvas
   context.clearRect(0,0,canvas.width,canvas.height);
+
+  //moves snake
   snake.x += snake.dx;
   snake.y += snake.dy;
+  //moves snake2
   snake2.x += snake2.dx;
   snake2.y += snake2.dy;
   // wrap snake position on edge of screen
@@ -182,23 +203,29 @@ function loop() {
   context.fillStyle = 'green';
   context.fillRect(apples[i].x, apples[i].y, grid-1, grid-1);
 }
-  // draw snake
-  //Blue snake
+
+  //checks if snake is invincible and adds to snakes invincibleFatigue
 if(snake.invincible){
-  snake.invincibleEnergy++;
+  snake.invincibleFatigue++;
 }
+  //checks if snake2 is invincible and adds to snakes2 invincibleFatigue
 if(snake2.invincible){
-  snake2.invincibleEnergy++;
+  snake2.invincibleFatigue++;
 }
 
+  //set draw color to blue in preparation for drawing snake
   context.fillStyle = 'blue';
   snake.cells.forEach(function(cell, index) {
     context.fillRect(cell.x, cell.y, grid-1, grid-1);
-    // snake ate apple
 
+
+
+    // checks to see if snake ate an apple
   for(var i = 0; i < apples.length; i++){
     if (cell.x === apples[i].x &&  cell.y === apples[i].y) {
+        //adds one cell to the snake
         snake.maxCells++;
+        //respawns the apple that was eaten.
         apples[i].x = getRandomInt(0, 25) * grid;
         apples[i].y = getRandomInt(0, 25) * grid;
       }
@@ -206,17 +233,25 @@ if(snake2.invincible){
 
     for (var i = index + 1; i < snake.cells.length; i++) {
 
-      if(snake.invincibleEnergy >= snake.timer){
+      //if snake's invincibleFatigue reach the timer value stop snake's invincible
+      if(snake.invincibleFatigue >= snake.timer){
         snake.invincible = false;
       }
 
-      // collision. reset game
+      // checks collision
         if(!snake.invincible){
+          //resets draw color because of invincible
           context.fillStyle = 'blue';
+          //if the snake's head hits any other cell in its own body
+          //set winner equal to red
+          //set winScreen equal to true
         if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
           winner = "red";
           winScreen = true;
         }
+        //if the snake's head hits any cell in snake2's body
+        //set winner equal to red
+        //set winScreen equal to true
         for (var j = 0; j < snake2.cells.length; j++) {
           if (cell.x === snake2.cells[j].x && cell.y === snake2.cells[j].y) {
             winner = "red";
@@ -224,38 +259,50 @@ if(snake2.invincible){
           }
         }
       } else {
+        //if invincible draw the snake with a gold color and don't check for its collision
         context.fillStyle = "#ffff00";
         context.fillRect(cell.x, cell.y, grid-1, grid-1);
       }
     }
   });
 
-  //Red snake
+  //set draw color to red in preparation for drawing snake2
   context.fillStyle = 'red';
-
   snake2.cells.forEach(function(cell, index){
     context.fillRect(cell.x, cell.y, grid-1, grid-1);
-      // snake ate apple
 
+    // checks to see if snake2 ate an apple
     for(var i = 0; i < apples.length; i++){
       if (cell.x === apples[i].x && cell.y === apples[i].y) {
+        //adds one cell to the snake2
         snake2.maxCells++;
+        //respawns the apple that was eaten.
         apples[i].x = getRandomInt(0, 25) * grid;
         apples[i].y = getRandomInt(0, 25) * grid;
-      }}
+      }
+    }
       for (var i = index + 1; i < snake2.cells.length; i++) {
 
-        if(snake2.invincibleEnergy >= snake2.timer){
+        //if snake2's invincibleFatigue reach the timer value stop snake2's invincible
+        if(snake2.invincibleFatigue >= snake2.timer){
           snake2.invincible = false;
         }
-        // collision. reset game
+        // checks collision
         if(!snake2.invincible){
+          //resets draw color because of invincible
           context.fillStyle = 'red';
 
+
+          //if the snake2's head hits any other cell in its own body
+          //set winner equal to blue
+          //set winScreen equal to true
           if (cell.x === snake2.cells[i].x && cell.y === snake2.cells[i].y) {
             winner = "blue"
             winScreen = true;
           }
+          //if the snake2's head hits any cell in snakes body
+          //set winner equal to blue
+          //set winScreen equal to true
           for (var j = 0; j < snake.cells.length; j++) {
             if (cell.x === snake.cells[j].x && cell.y === snake.cells[j].y) {
               winner = "blue"
@@ -263,6 +310,7 @@ if(snake2.invincible){
             }
           }
         } else {
+            //if invincible draw the snake with a gold color and don't check for its collision
             context.fillStyle = "#ffff00";
             context.fillRect(cell.x, cell.y, grid-1, grid-1);
         }
@@ -270,23 +318,25 @@ if(snake2.invincible){
   });
 }
 if(winScreen){
+  //clear the canvas
   context.clearRect(0,0,canvas.width,canvas.height);
-  context.font = "30px Arial";
+  //draw Blue snake won text if blue snake won
   if (winner === "blue") {
     context.textAlign="center";
     context.fillStyle = '#0066cc';
     context.fillText("Blue Snake Wins!", 200, 175);
     context.fillText("Press any key to play again", 200, 225);
-
+    //refresh page on onkeypress
     document.onkeypress=function(e){
       location = location;
     }
+    //draw red snake won text if red snake won
   } else {
       context.textAlign="center";
       context.fillStyle = 'red';
       context.fillText("Red Snake Wins!", 200, 175);
       context.fillText("Press any key to play again", 200, 225);
-
+      //refresh page on onkeypress
       document.onkeypress=function(e){
         location = location;
       }
@@ -296,7 +346,8 @@ if(winScreen){
 
 document.addEventListener('keydown', function(e) {
 
-  //Power up button
+  //invincible button
+  //space bar
   if (e.which === 32) {
     snake.invincible = true;
   }
@@ -318,8 +369,8 @@ document.addEventListener('keydown', function(e) {
     snake.dx = 0;
   }
 
-//control snake2
-//Power up button.
+  //invincible button
+  //E
   if (e.which === 69) {
     snake2.invincible = true;
   }
@@ -342,6 +393,7 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+//This calls loop again.
 requestAnimationFrame(loop);
 
 </script>
