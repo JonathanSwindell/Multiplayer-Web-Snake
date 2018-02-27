@@ -1,4 +1,4 @@
-# BlueTomCat.github.io
+# Snakez
 The arcade classic snake with a multiplayer twist.
 
 Controls: Blue snake: arrow keys to move, space bar to go invincible Red snake: WASD to move, E to go invincible
