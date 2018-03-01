@@ -303,7 +303,7 @@ if(snake2.invincible){
           //if the snake2's head hits any cell in snakes body
           //set winner equal to blue
           //set winScreen equal to true
-          for (var j = 0; j < snake.cells.length; j++) {
+          for (var j = index + 1; j < snake.cells.length; j++) {
             if (cell.x === snake.cells[j].x && cell.y === snake.cells[j].y) {
               winner = "blue"
               winScreen = true;
