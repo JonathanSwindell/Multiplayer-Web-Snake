@@ -1,5 +1,5 @@
 # Snakez
-# HTML and Javascript implementation of the Snake Arcade game
+# An HTML and Javascript implementation of the Snake Arcade game
 
 In high school my team and I programmed this game during one day at a hackathon in Huntsville Alabama.
 http://www.hackhsv.com
