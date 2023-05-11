@@ -1,6 +1,10 @@
 # Snakez
-This game was programmed during one day at a hackathon in Huntsville Alabama.
+# HTML and Javascript implementation of the Snake Arcade game
+
+In high school my team and I programmed this game during one day at a hackathon in Huntsville Alabama.
 http://www.hackhsv.com
+
+We won 3rd place in the hackathon.
 
 The arcade classic snake with a multiplayer twist.
 
