@@ -13,4 +13,6 @@ Controls: Blue snake: arrow keys to move, space bar to go invincible
 
 The goal of the game is to outlive your opponent by forcing them to run into their own body or yours. Activate invincibility once per game to get out of a tough spot, but only for a short duration.
 
-Play it here: https://jonathanswindell.github.io/snakez/snakez.html
+<img width="432" alt="Screenshot 2024-09-28 at 11 57 19 AM" src="https://github.com/user-attachments/assets/855472a7-6d1a-40fd-a56f-092fb260b2b5">
+
+Play it by downloading the repository and opening the html file in a web browser.
